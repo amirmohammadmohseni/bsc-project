@@ -22,10 +22,12 @@ class Student(BaseUser):
     field = models.ForeignKey('Field', on_delete=models.SET_NULL, null=True)
     enteranceYear = models.SmallIntegerField()
     advisorProf = models.ForeignKey('Professor', on_delete=models.SET_NULL, null=True)
+    is_superuser = False
 
 
 class Professor(BaseUser):
     group = models.ForeignKey('Group', on_delete=models.SET_NULL, null=True)
+    is_superuser = False
 
 
 class Group(models.Model):
