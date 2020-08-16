@@ -54,3 +54,48 @@ class Proposal(models.Model):
 
     def get_absolute_url(self):
         return reverse('proposal_detail', kwargs={'pk': self.pk})
+
+
+class Comment(models.Model):
+    author = models.ForeignKey('users.Professor', on_delete=models.SET_NULL, null=True)
+
+    context = models.TextField(max_length=5000)
+
+    createdAt = models.DateTimeField(auto_now=False)
+
+    class CommentType(models.TextChoices):
+        REVISION = 'RE', _('Revision')
+        DEFENSE = 'DE', _('Defense')
+
+    commentOn = models.CharField(max_length=2, choices=CommentType.choices, default=CommentType.REVISION)
+
+    class Meta:
+        verbose_name = _('comment')
+        verbose_name_plural = _('comments')
+
+    def __str__(self):
+        return "Comment On " + self.onProposal.title
+
+    def get_absolute_url(self):
+        return reverse('comment_detail', kwargs={'pk': self.pk})
+
+
+class ProposalSubmission(models.Model):
+    title = models.CharField(max_length=25)
+
+    openAt = models.DateTimeField(auto_now=False, auto_now_add=False)
+    closeAt = models.DateTimeField(auto_now=False, auto_now_add=False)
+
+    revisionUntil = models.DateTimeField(auto_now=False, auto_now_add=False)
+
+    semester = models.DecimalField(max_digits=4)
+
+    class Meta:
+        verbose_name = _('proposalsubmission')
+        verbose_name_plural = _('proposalsubmissions')
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('proposalsubmission_detail', kwargs={'pk': self.pk})
