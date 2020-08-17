@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
+from django.urls import reverse
 
 
 def user_directory_path(instance, filename):
@@ -12,8 +14,8 @@ class Proposal(models.Model):
 
     student = models.ForeignKey('users.Student', on_delete=models.SET_NULL, null=True)
 
-    arbiter1 = models.ForeignKey('users.Professor', on_delete=models.SET_NULL, null=True)
-    arbiter2 = models.ForeignKey('users.Professor', on_delete=models.SET_NULL, null=True)
+    arbiter1 = models.ForeignKey('users.Professor', on_delete=models.SET_NULL, null=True, related_name='arbiter1')
+    arbiter2 = models.ForeignKey('users.Professor', on_delete=models.SET_NULL, null=True, related_name='arbiter2')
 
     issuanceDate = models.DateTimeField()
 
@@ -59,6 +61,8 @@ class Proposal(models.Model):
 class Comment(models.Model):
     author = models.ForeignKey('users.Professor', on_delete=models.SET_NULL, null=True)
 
+    onProposal = models.ForeignKey('Proposal', on_delete=models.SET_NULL, null=True)
+
     context = models.TextField(max_length=5000)
 
     createdAt = models.DateTimeField(auto_now=False)
@@ -88,7 +92,7 @@ class ProposalSubmission(models.Model):
 
     revisionUntil = models.DateTimeField(auto_now=False, auto_now_add=False)
 
-    semester = models.DecimalField(max_digits=4)
+    semester = models.PositiveIntegerField()
 
     class Meta:
         verbose_name = _('proposalsubmission')
