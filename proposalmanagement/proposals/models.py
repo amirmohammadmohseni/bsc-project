@@ -5,7 +5,7 @@ from django.urls import reverse
 
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return 'user_{0}/{1}'.format(instance.user.id, filename)
+    return 'user_{0}/{1}'.format(instance.student.id, filename)
 
 
 class Proposal(models.Model):
@@ -17,7 +17,7 @@ class Proposal(models.Model):
     arbiter1 = models.ForeignKey('users.Professor', on_delete=models.SET_NULL, null=True, related_name='arbiter1')
     arbiter2 = models.ForeignKey('users.Professor', on_delete=models.SET_NULL, null=True, related_name='arbiter2')
 
-    issuanceDate = models.DateTimeField()
+    issuanceDate = models.DateTimeField(auto_now_add=True, auto_now=False)
 
     keywords = models.TextField()    # Array Field? Or OneToMany Relationship?
 
@@ -34,7 +34,7 @@ class Proposal(models.Model):
         default=ResearchType.FUNDAMENTAL,
     )
 
-    defenseDate = models.DateTimeField(auto_now=False, auto_now_add=False)
+    defenseDate = models.DateTimeField(auto_now=False, auto_now_add=False, blank=True, null=True)
     councilApproved = models.BooleanField(default=False)
 
     file = models.FileField(upload_to=user_directory_path)
