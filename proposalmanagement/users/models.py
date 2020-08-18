@@ -8,6 +8,9 @@ class BaseUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     uid = models.CharField(max_length=8)
 
+    def __str__(self):
+        return self.user.username
+
     class Role(models.TextChoices):
         STUDENT = 'ST', _('Student')
         PROFESSOR = 'PR', _('Professor')
