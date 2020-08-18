@@ -1,4 +1,4 @@
-{% extends 'formbase.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block head %}
@@ -11,10 +11,9 @@
             <div class="card shadow-lg o-hidden border-0 my-5">
                 <div class="card-body p-0">
                     <div class="row">
-                        <div class="col-lg-6 d-none d-lg-flex">
-                            {% comment %} <div class="flex-grow-1 bg-login-image" style="background-image: url(&quot;{% static 'assets/img/dogs/image3.jpeg' %}&quot;);"></div> {% endcomment %}
+                        <div class="col-lg-3 d-none d-lg-flex">
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-6 ">
                             <div class="p-5">
                                 <div class="text-center">
                                     <h4 class="text-dark mb-4">Welcome</h4>
@@ -26,8 +25,7 @@
                                     <hr>
                                     <hr>
                                 </form>
-                                <div class="text-center"><a class="small" href="forgot-password.html">Forgot Password?</a></div>
-                                <div class="text-center"><a class="small" href="register.html">Create an Account!</a></div>
+                                <div class="text-center"><a class="small" href="{% url 'users:login'%}">Create an Account!</a></div>
                             </div>
                         </div>
                     </div>
