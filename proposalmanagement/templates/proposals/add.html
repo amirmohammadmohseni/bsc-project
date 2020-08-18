@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    <title>Create Proposal</title>
+{% endblock head %}
+
+{% block body %}
+    <div class="row justify-content-center">
+        <div class="col-md-9 col-lg-12 col-xl-10">
+            <div class="card shadow-lg o-hidden border-0 my-5">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-lg-3 d-none d-lg-flex">
+                        </div>
+                        <div class="col-lg-6 ">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h4 class="text-dark mb-4">Proposal Submission</h4>
+                                </div>
+                                <form method="POST" data-ajax="false" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    {{ form }}
+                                    <button class="btn btn-primary btn-block text-white btn-user" type="submit">Save</button> 
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
