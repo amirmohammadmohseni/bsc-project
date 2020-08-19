@@ -21,3 +21,5 @@ urlpatterns = [
     path('proposal/', include('proposals.urls')),
     path('user/', include('users.urls'))
 ]
+
+admin.site.site_url = '/user/dashboard'

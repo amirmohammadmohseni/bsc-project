@@ -15,16 +15,16 @@ def dashboard(request):
     user = request.user
     context = {'is_ST': user.baseuser.role == 'ST'}
     if context['is_ST']:
-        context['user'] = Student.objects.get(id=user.baseuser.pk)
-        context['proposal'] = Proposal.objects.filter(student=context['user']).first()
-        context['NOComments'] = len(Comment.objects.filter(onProposal=context['proposal']))
+        context['requser'] = Student.objects.get(id=user.baseuser.pk)
+        context['proposal'] = Proposal.objects.filter(student=context['requser']).first()
+        context['NOComments'] = Comment.objects.filter(onProposal=context['proposal']).count()
     else:
-        context['user'] = Professor.objects.get(id=user.baseuser.id)
-        context['is_manager'] = context['user'].group.manager.id == context['user'].id
-        context['students'] = Student.objects.filter(advisorProf=context['user'])
+        context['requser'] = Professor.objects.get(id=user.baseuser.id)
+        context['is_manager'] = context['requser'].group.manager.id == context['requser'].id
+        context['students'] = Student.objects.filter(advisorProf=context['requser'])
         context['sp_proposals'] = Proposal.objects.filter(student__in=context['students'])
-        context['rvw_proposals'] = list(Proposal.objects.filter(arbiter1=context['user'])) + list(
-            Proposal.objects.filter(arbiter2=context['user']))
+        context['rvw_proposals'] = list(Proposal.objects.filter(arbiter1=context['requser'])) + list(
+            Proposal.objects.filter(arbiter2=context['requser']))
         if context['is_manager']:
             context['proposals'] = Proposal.objects.all()
     print(context)

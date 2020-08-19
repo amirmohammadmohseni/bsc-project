@@ -24,8 +24,8 @@
                 SBU Graduate Proposals
             </a>
             <div class="navbar">
-                {% if user.user.is_authenticated %}
-                {% if user.user.is_staff %}
+                {% if user.is_authenticated %}
+                {% if user.is_staff %}
                 <a class="nav-link" href="/admin"><span>Admin Panel</span></a>
                 {% endif %}
                 <a class="nav-link" href="{% url 'users:logout'%}"><span>Logout</span></a>
