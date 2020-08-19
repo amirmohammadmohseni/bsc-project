@@ -1,38 +1,131 @@
 {% extends 'base.html' %}
 {% block head %}
+<title>Dashboard</title>
 {% endblock head %}
 
 
 {% block body %}
+<br>
+<br>
+{% if is_ST %}
+<h1> Welcome {{user.user.username}} - {{user.field.title}}  </h1>
+<br>
+<br>
+<br>
+    <h2>Your Latest Proposal</h2>
+    <br>
 <div class="row">
     <div class="col-md-6">
-        <ul>
-            <li>a</li>
-            <li>b</li>
-            <li>c</li>
-            <li>d</li>
-        </ul>
+        {% if proposal %} 
+            
+            <a href="{% url 'proposals:add' %}"><h3>{{ proposal.title }}</h3></a>
+        {% if NOComments %}
+            <a href="{% url 'proposals:add' %}">{{ proposal.title }}</a>
+        {% else %}
+            <h6>Number Of Comments: {{ NOComments }}</h6>
+        {% endif %}
+            <h6>Council Approved? {{ proposal.councilApproved }}</h6>
+            <h6>Defense Date: {{ proposal.defenseDate }}</h6>
+            <h6>Arbiter 1: {{ proposal.arbiter1.user.username }}</h6>
+            <h6>Arbiter 2: {{ proposal.arbiter2.user.username }}</h6>
+        {% else %}
+        Nothing  <a class="nav-link" href="{% url 'proposals:add'%}"><span>Add Proposal</span></a>
+         {% endif %}
     </div>
 </div>
-<div class="row">
+{% else %}
+    
+<h1> Welcome {{user.user.username}} - {{user.group.title}} </h1>
+<br>
+<br>
+<br>
+        <h2>Supervised Students</h2>
+        <br>
+    <div class="row">
+        <div class="col-md-6">
+        {% for s in students %}
+            <h3>{{ s.student.user.username }}</h3>
+            <h6>{{ s.student.field }} | {{ s.student.enteranceYear }}</h4>
+            <hr>
+<br>
+        {% empty %}
+            Nothing
+        {% endfor %}
+        </div>
+    </div>
+        <br>
+        <br>
+        <br>
+        <br>
 
-    <div class="col-md-6">
-        <ul>
-            <li>a</li>
-            <li>b</li>
-            <li>c</li>
-            <li>d</li>
-        </ul>
+        <h2>Supervised Proposals</h2>
+        <br>
+    <div class="row">
+        <div class="col-md-6">
+        {% for p in sp_proposals %}
+                <a href="{% url 'proposals:add' %}"><h3>{{ p.title }}</h3></a>
+                <h6>Student: {{ p.student.user.username }} | {{ p.student.field }} | {{ p.student.enteranceYear }}</h4>
+                <h6>Council Approved? {{ p.councilApproved }}</h6>
+                <h6>Defense Date: {{ p.defenseDate }}</h6>
+                <h6>Arbiter 1: {{ p.arbiter1.user.username }}</h6>
+                <h6>Arbiter 2: {{ p.arbiter2.user.username }}</h6>
+                <hr>
+<br>
+        {% empty %}
+            Nothing!
+        {% endfor %}
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-6">
-        <ul>
-            <li>a</li>
-            <li>b</li>
-            <li>c</li>
-            <li>d</li>
-        </ul>
+
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <h2>Proposals To Review</h2>
+        <br>
+    <div class="row">
+        <div class="col-md-6">
+        {% for p in rvw_proposals %}
+                <a href="{% url 'proposals:add' %}"><h3>{{ p.title }}</h3></a>
+                <h6>Student: {{ p.student.user.username }} | {{ p.student.field }} | {{ p.student.enteranceYear }}</h4>
+                <h6>Defense Date: {{ p.defenseDate }}</h6>
+                <hr>
+<br>
+        {% empty %}
+            Nothing
+        {% endfor %}
+        </div>
     </div>
-</div>
+
+    {% if is_manager %}
+<br>
+<br>
+<br>
+<br>
+
+        <h2>Students' Proposals</h2>
+        <br>
+        <div class="row">
+        <div class="col-md-6">
+        {% for p in proposals %}
+                <a href="{% url 'proposals:add' %}"><h3>{{ p.title }}</h3></a>
+                <h6>Student: {{ p.student.user.username }} | {{ p.student.field }} | {{ p.student.enteranceYear }}</h4>
+                <h6>Council Approved? {{ p.councilApproved }}</h6>
+                <h6>Defense Date: {{ p.defenseDate }}</h6>
+                <h6>Arbiter 1: {{ p.arbiter1.user.username }}</h6>
+                <h6>Arbiter 2: {{ p.arbiter2.user.username }}</h6>
+                <hr>
+<br>
+        {% empty %}
+            Nothing
+        {% endfor %}
+        </div>
+    </div>
+        <br>
+        <br>
+        <br>
+        <br>
+    {% endif %}
+{% endif %}
 {% endblock body %}
