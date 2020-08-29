@@ -1,6 +1,6 @@
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 
 def user_directory_path(instance, filename):
@@ -12,14 +12,17 @@ class Proposal(models.Model):
     title = models.CharField(max_length=60)
     titlePersian = models.CharField(max_length=60)
 
-    student = models.ForeignKey('users.Student', on_delete=models.SET_NULL, null=True)
+    student = models.ForeignKey('users.Student', on_delete=models.SET_NULL,
+                                null=True)
 
-    arbiter1 = models.ForeignKey('users.Professor', on_delete=models.SET_NULL, null=True, related_name='arbiter1')
-    arbiter2 = models.ForeignKey('users.Professor', on_delete=models.SET_NULL, null=True, related_name='arbiter2')
+    arbiter1 = models.ForeignKey('users.Professor', on_delete=models.SET_NULL,
+                                 null=True, related_name='arbiter1')
+    arbiter2 = models.ForeignKey('users.Professor', on_delete=models.SET_NULL,
+                                 null=True, related_name='arbiter2')
 
     issuanceDate = models.DateTimeField(auto_now_add=True, auto_now=False)
 
-    keywords = models.TextField()    # Array Field? Or OneToMany Relationship?
+    keywords = models.TextField()  # Array Field? Or OneToMany Relationship?
 
     class ResearchType(models.TextChoices):
         FUNDAMENTAL = 'FU', _('Fundamental')
@@ -29,12 +32,13 @@ class Proposal(models.Model):
 
     # This Should be changed to a Multiple choice field!
     researchType = models.CharField(
-        max_length=2,
-        choices=ResearchType.choices,
-        default=ResearchType.FUNDAMENTAL,
+            max_length=2,
+            choices=ResearchType.choices,
+            default=ResearchType.FUNDAMENTAL,
     )
 
-    defenseDate = models.DateTimeField(auto_now=False, auto_now_add=False, blank=True, null=True)
+    defenseDate = models.DateTimeField(auto_now=False, auto_now_add=False,
+                                       blank=True, null=True)
     councilApproved = models.BooleanField(default=False)
 
     file = models.FileField(upload_to=user_directory_path)
@@ -59,9 +63,11 @@ class Proposal(models.Model):
 
 
 class Comment(models.Model):
-    author = models.ForeignKey('users.Professor', on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey('users.Professor', on_delete=models.SET_NULL,
+                               null=True)
 
-    onProposal = models.ForeignKey('Proposal', on_delete=models.SET_NULL, null=True)
+    onProposal = models.ForeignKey('Proposal', on_delete=models.SET_NULL,
+                                   null=True)
 
     context = models.TextField(max_length=5000)
 
@@ -71,7 +77,8 @@ class Comment(models.Model):
         REVISION = 'RE', _('Revision')
         DEFENSE = 'DE', _('Defense')
 
-    commentOn = models.CharField(max_length=2, choices=CommentType.choices, default=CommentType.REVISION)
+    commentOn = models.CharField(max_length=2, choices=CommentType.choices,
+                                 default=CommentType.REVISION)
 
     class Meta:
         verbose_name = _('comment')

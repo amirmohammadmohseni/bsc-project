@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView
-from .models import Proposal, Comment
 from users.models import Student
+
+from .models import Proposal, Comment
 
 
 class CreateProposal(CreateView):
@@ -24,7 +25,8 @@ class CreateProposal(CreateView):
     success_url = '/user/dashboard'
 
     def form_valid(self, form):
-        form.instance.student = Student.objects.get(id=self.request.user.baseuser.id)
+        form.instance.student = Student.objects.get(
+                id=self.request.user.baseuser.id)
         return super().form_valid(form)
 
 

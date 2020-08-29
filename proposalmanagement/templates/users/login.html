@@ -21,11 +21,13 @@
                                 <form class="user" method="POST">
                                     {% csrf_token %}
                                     {{ form }}
-                                    <button class="btn btn-primary btn-block text-white btn-user" type="submit">Login</button> 
+                                    <button class="btn btn-primary btn-block text-white btn-user" type="submit">Login
+                                    </button>
                                     <hr>
                                     <hr>
                                 </form>
-                                <div class="text-center"><a class="small" href="{% url 'users:login'%}">Create an Account!</a></div>
+                                <div class="text-center"><a class="small" href="{% url 'users:login' %}">Create an
+                                    Account!</a></div>
                             </div>
                         </div>
                     </div>

@@ -1,7 +1,7 @@
-from django.db import models
 from django.contrib.auth.models import User
-from django.utils.translation import gettext_lazy as _
+from django.db import models
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 
 class BaseUser(models.Model):
@@ -26,7 +26,8 @@ class BaseUser(models.Model):
 class Student(BaseUser):
     field = models.ForeignKey('Field', on_delete=models.SET_NULL, null=True)
     enteranceYear = models.SmallIntegerField()
-    advisorProf = models.ForeignKey('Professor', on_delete=models.SET_NULL, null=True)
+    advisorProf = models.ForeignKey('Professor', on_delete=models.SET_NULL,
+                                    null=True)
 
 
 class Professor(BaseUser):
@@ -35,7 +36,8 @@ class Professor(BaseUser):
 
 class Group(models.Model):
     title = models.CharField(max_length=30)
-    manager = models.ForeignKey('Professor', on_delete=models.SET_NULL, blank=True, null=True, related_name='manager')
+    manager = models.ForeignKey('Professor', on_delete=models.SET_NULL,
+                                blank=True, null=True, related_name='manager')
 
     class Meta:
         verbose_name = _('group')
